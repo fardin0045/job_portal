@@ -68,7 +68,7 @@ $total_jobs = $count_result->fetch_assoc()['total_jobs'];
 
         .banner-image {
             display: none;
-            
+
             width: 100%;
             height: auto;
         }
@@ -169,43 +169,48 @@ $total_jobs = $count_result->fetch_assoc()['total_jobs'];
         }
     </style>
 </head>
-    <header>
-        <?php include "navbar.php"; ?>
-    </header>
-    <div class="banner">
-        <div class="banner-content">
-            <h1>Find Your Dream Job</h1>
-            <p>Explore thousands of job opportunities across Bangladesh and take the next step in your career.</p>
-            <a href="job_news.php" class="btn-banner">See Jobs</a>
-        </div>
-        <img src="office-work-1024x684.jpg" alt="Office Work" class="banner-image">
+<header>
+    <?php include "navbar.php"; ?>
+</header>
+<div class="banner">
+    <div class="banner-content">
+        <h1>Find Your Dream Job</h1>
+        <p>Explore thousands of job opportunities across Bangladesh and take the next step in your career.</p>
+        <a href="job_news.php" class="btn-banner">See Jobs</a>
     </div>
+    <img src="office-work-1024x684.jpg" alt="Office Work" class="banner-image">
+</div>
 
-    <main class="job_container">
-        <h1 style="text-align:center">Featured Jobs</h1>
-        <div class="job-listings">
+<main class="job_container">
+    <h1 style="text-align:center">Featured Jobs</h1>
+    <div class="job-listings">
 
-            <?php while ($job = $result->fetch_assoc()) { ?>
-                <div class="job-card">
-                    <h2><?php echo $job['title']; ?></h2>
-                    <p><strong>Company:</strong> <?php echo $job['company']; ?></p>
-                    <p><strong>Location:</strong> <?php echo $job['location']; ?></p>
-                    <p><strong>Type:</strong> <?php echo $job['job_type']; ?></p>
-                    <p><strong>Salary:</strong> <?php echo $job['salary']; ?></p>
+        <?php while ($job = $result->fetch_assoc()) { ?>
+            <div class="job-card">
+                <h2><?php echo $job['title']; ?></h2>
+                <p><strong>Company:</strong> <?php echo $job['company']; ?></p>
+                <p><strong>Location:</strong> <?php echo $job['location']; ?></p>
+                <p><strong>Type:</strong> <?php echo $job['job_type']; ?></p>
+                <p><strong>Salary:</strong> <?php echo $job['salary']; ?></p>
+                <?php if (isset($_SESSION['user_id'])): ?>
                     <a href="job_details.php?id=<?php echo $job['id']; ?>" class="btn">Apply Online</a>
-                </div>
-            <?php } ?>
-        </div>
-        <?php if ($limit < $total_jobs) { ?>
-            <div class="show-more-container">
-                <form action="" method="get">
-                    <input type="hidden" name="limit" value="<?php echo $limit + 6; ?>">
-                    <button type="submit" class="show-more-btn">Show More</button>
-                </form>
+                <?php else: ?>
+                    <a href="login.php" class="btn" style="background:linear-gradient(135deg, #00c851, #007e33);">Login to Apply</a>
+                <?php endif; ?>
+
             </div>
         <?php } ?>
-    </main>
-    <?php include "footer.php" ; ?>
+    </div>
+    <?php if ($limit < $total_jobs) { ?>
+        <div class="show-more-container">
+            <form action="" method="get">
+                <input type="hidden" name="limit" value="<?php echo $limit + 6; ?>">
+                <button type="submit" class="show-more-btn">Show More</button>
+            </form>
+        </div>
+    <?php } ?>
+</main>
+<?php include "footer.php"; ?>
 </body>
 
 </html>
